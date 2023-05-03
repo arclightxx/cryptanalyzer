@@ -12,7 +12,6 @@ public class Application {
         modes.put(2, "Расшифровка");
         modes.put(3, "Взлом");
     }
-    private  final String defaultInputFile = "input.txt";
 
     public Application() {
         menu = new Menu();
