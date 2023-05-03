@@ -12,8 +12,7 @@ public class Application {
         modes.put(2, "Расшифровка");
         modes.put(3, "Взлом");
     }
-    private int mode;
-    private String inputFile;
+    private  final String defaultInputFile = "input.txt";
 
     public Application() {
         menu = new Menu();
@@ -21,12 +20,6 @@ public class Application {
 
     public void run() {
         menu.displayMenu();
-        init();
-    }
-
-    private void init() {
         userInput = menu.getUserInput();
-        mode = userInput.getMode();
-        inputFile = userInput.getFileInput();
     }
 }
