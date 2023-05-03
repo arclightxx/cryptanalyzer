@@ -11,7 +11,7 @@ public class Menu {
     private static final String THIRD_MODE_INFO = "3. Взлом - программа взламывает зашифрованный текст\n";
     private static final String MODE_INPUT_MESSAGE = "Пожалуйста, введите желаемый режим работы, используя цифры 1, 2 и 3";
     public static final String MENU_MESSAGE = GREETINGS_MESSAGE + APP_INFO + FIRST_MODE_INFO + SECOND_MODE_INFO + THIRD_MODE_INFO + MODE_INPUT_MESSAGE;
-    public static String MODE_INFO_MESSAGE = "Вы выбрали режим %s. Пожалуйста, введите путь к исходному текстовому файлу или введите default, чтобы выбрать файл по умолчанию";
+    public static final String MODE_INFO_MESSAGE = "Вы выбрали режим %s. Пожалуйста, введите путь к исходному текстовому файлу или введите default, чтобы выбрать файл по умолчанию";
 
     public void displayMenu() {
         System.out.println(Menu.MENU_MESSAGE);
@@ -40,7 +40,8 @@ public class Menu {
 
     private String getInputFile(Scanner scanner) {
         try {
-            return scanner.next();
+            String inputFile = scanner.next();
+            return "default".equals(inputFile) ? "input.txt" : inputFile;
         } catch (Exception e) { // TODO Создать исключение, которое выбрасывается при некорректном вводе имени файла
             System.out.println(e.getMessage());
             return "";
