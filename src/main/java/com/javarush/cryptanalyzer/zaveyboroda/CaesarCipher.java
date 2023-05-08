@@ -1,14 +1,17 @@
 package com.javarush.cryptanalyzer.zaveyboroda;
 
+import com.javarush.cryptanalyzer.zaveyboroda.constants.Alphabet;
+
 import java.io.*;
+import java.nio.file.Path;
 import java.util.Random;
 
 public class CaesarCipher {
     private int shift;
 
-    public int encode(String inputFile) {
+    public int encode(Path inputFile) {
         shift = getRandomShift();
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile.toFile()));
              BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -30,10 +33,10 @@ public class CaesarCipher {
         return new Random().nextInt(Alphabet.ALPHABET.length()) + 1;
     }
 
-    public void decode(String inputFile, int shift) {
+    public void decode(Path inputFile, int shift) {
         this.shift = -shift;
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile));
-             BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile.toFile()));
+             BufferedWriter writer = new BufferedWriter(new FileWriter("output-1.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 char[] charLine = line.toCharArray();
