@@ -49,8 +49,8 @@ public class ConsoleView implements View {
                 }
             } else {
                 System.out.println(MenuConstants.MODE_INVALID_INPUT_MESSAGE);
-                scanner.nextLine();
             }
+            scanner.nextLine();
         }
         return mode;
     }
