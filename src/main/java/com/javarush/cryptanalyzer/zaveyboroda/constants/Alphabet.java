@@ -1,4 +1,4 @@
-package com.javarush.cryptanalyzer.zaveyboroda;
+package com.javarush.cryptanalyzer.zaveyboroda.constants;
 
 public class Alphabet {
     private static final String lettersUpperCase = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
