@@ -1,14 +1,15 @@
 package com.javarush.cryptanalyzer.zaveyboroda.app;
 
-import com.javarush.cryptanalyzer.zaveyboroda.CaesarCipher;
 import com.javarush.cryptanalyzer.zaveyboroda.entities.UserInput;
 import com.javarush.cryptanalyzer.zaveyboroda.controllers.MainController;
+import com.javarush.cryptanalyzer.zaveyboroda.services.BruteForce;
+import com.javarush.cryptanalyzer.zaveyboroda.services.Decode;
+import com.javarush.cryptanalyzer.zaveyboroda.services.Encode;
+import com.javarush.cryptanalyzer.zaveyboroda.services.Function;
 import com.javarush.cryptanalyzer.zaveyboroda.view.View;
 
-import java.nio.file.Path;
-
 public class Application {
-    private MainController mainController;
+    private final MainController mainController;
 
     public Application(MainController mainController) {
         this.mainController = mainController;
@@ -19,11 +20,16 @@ public class Application {
         view.displayMenu();
         UserInput userInput = view.getUserInput();
         int mode = userInput.getMode();
-        Path fileInput = userInput.getFileInput();
-        CaesarCipher caesarCipher = new CaesarCipher();
-        int shift = caesarCipher.encode(userInput.getFileInput());
-        System.out.println("Шифрование прошло успешно! Ключ для расшифровки: " + shift);
-        caesarCipher.decode(Path.of("output.txt"), shift);
-        System.out.println("Расшифровка прошла успешно!");
+        Function function = getFunction(mode);
+        function.execute(userInput);
+    }
+
+    private Function getFunction(int mode) {
+        return switch (mode) {
+            case 1 -> new Encode();
+            case 2 -> new Decode();
+            case 3 -> new BruteForce();
+            default -> throw new RuntimeException("Режим не поддерживается");
+        };
     }
 }
