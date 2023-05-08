@@ -17,6 +17,10 @@ public class Decode implements Function {
             while ((line = reader.readLine()) != null) {
                 char[] charLine = line.toCharArray();
                 for (int i = 0; i < charLine.length; i++) {
+                    int posInAlphabet = Alphabet.ALPHABET.indexOf(charLine[i]);
+                    if (posInAlphabet == -1) {
+                        continue;
+                    }
                     int index = (Alphabet.ALPHABET.indexOf(charLine[i]) + shift + Alphabet.ALPHABET.length()) % Alphabet.ALPHABET.length();
                     charLine[i] = Alphabet.ALPHABET.charAt(index);
                 }
