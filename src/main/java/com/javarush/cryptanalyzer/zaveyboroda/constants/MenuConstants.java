@@ -19,7 +19,7 @@ public class MenuConstants {
     public static final String MENU_MESSAGE = GREETINGS_MESSAGE + APP_INFO + FIRST_MODE_INFO + SECOND_MODE_INFO + THIRD_MODE_INFO + MODE_INPUT_MESSAGE;
     public static final String MODE_INVALID_INPUT_MESSAGE = "Пожалуйста, используйте цифры 1, 2 и 3 для корректной работы программы";
     public static final String MODE_SUCCESS_MESSAGE = "Вы выбрали режим: %s";
-    public static final String SHIFT_INPUT_MESSAGE = "Пожалуйста, напишите желаемый ключ (число должно быть положительным)";
+    public static final String SHIFT_INPUT_MESSAGE = "Пожалуйста, напишите ключ для расшифровки (число должно быть положительным)";
     public static final String SHIFT_INVALID_INPUT_MESSAGE = "Пожалуйста, введите положительное число";
     public static final String SHIFT_INPUT_SUCCESS_MESSAGE = "Вы задали ключ: %d";
     public static final String SHIFT_RANDOM_SUCCESS_MESSAGE = "Случайно сгенерированный ключ: %d";
