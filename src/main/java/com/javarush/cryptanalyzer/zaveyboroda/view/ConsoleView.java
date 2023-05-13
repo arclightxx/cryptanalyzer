@@ -1,5 +1,6 @@
 package com.javarush.cryptanalyzer.zaveyboroda.view;
 
+import com.javarush.cryptanalyzer.zaveyboroda.constants.Alphabet;
 import com.javarush.cryptanalyzer.zaveyboroda.entities.UserInput;
 import com.javarush.cryptanalyzer.zaveyboroda.constants.MenuConstants;
 
@@ -19,7 +20,7 @@ public class ConsoleView implements View {
             int mode = getMode(scanner);
             System.out.printf(MenuConstants.MODE_SUCCESS_MESSAGE + "\n", MenuConstants.MODES.get(mode));
 
-            int shift = new Random().nextInt(86) + 1; // 86 is alphabet length
+            int shift = new Random().nextInt(Alphabet.length) + 1;
             if (mode == 2) {
                 System.out.println(MenuConstants.SHIFT_INPUT_MESSAGE);
                 shift = getShift(scanner);

@@ -1,5 +1,7 @@
 package com.javarush.cryptanalyzer.zaveyboroda.entities;
 
+import com.javarush.cryptanalyzer.zaveyboroda.constants.Alphabet;
+
 import java.nio.file.Path;
 
 public class UserInput {
@@ -22,6 +24,6 @@ public class UserInput {
     }
 
     public int getShift() {
-        return shift%86; // 86 is alphabet length
+        return shift % Alphabet.length;
     }
 }
