@@ -12,24 +12,28 @@ public class Decode implements Function {
         int shift = -userInput.getShift();
         Path inputFile = userInput.getFileInput();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile.toFile()));
-             BufferedWriter writer = new BufferedWriter(new FileWriter("output-1.txt"))) {
-            decode(reader, writer, shift);
+             BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
+            StringBuilder decryptedText = decode(reader, shift);
+            writer.write(decryptedText.toString());
+            System.out.println("Расшифрованный текст находится в файле output.txt");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void execute(Path inputFile, int shift) {
+    public StringBuilder execute(Path inputFile, int shift) {
         shift = -shift;
-        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile.toFile()));
-             BufferedWriter writer = new BufferedWriter(new FileWriter("output-1.txt"))) {
-            decode(reader, writer, shift);
+        StringBuilder decryptedText = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFile.toFile()))) {
+            decryptedText = decode(reader, shift);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        return decryptedText;
     }
 
-    private void decode(BufferedReader reader, BufferedWriter writer, int shift) throws IOException {
+    private StringBuilder decode(BufferedReader reader, int shift) throws IOException {
+        StringBuilder decryptedText = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
             char[] charLine = line.toCharArray();
@@ -41,8 +45,9 @@ public class Decode implements Function {
                 int index = (Alphabet.ALPHABET.indexOf(charLine[i]) + shift + Alphabet.ALPHABET.length()) % Alphabet.ALPHABET.length();
                 charLine[i] = Alphabet.ALPHABET.charAt(index);
             }
-            writer.write(charLine);
-            writer.newLine();
+            decryptedText.append(charLine).append("\n");
         }
+
+        return decryptedText;
     }
 }
