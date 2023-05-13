@@ -13,22 +13,26 @@ public class Encode implements Function {
         Path inputFile = userInput.getFileInput();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile.toFile()));
              BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                char[] charLine = line.toCharArray();
-                for (int i = 0; i < charLine.length; i++) {
-                    int posInAlphabet = Alphabet.ALPHABET.indexOf(charLine[i]);
-                    if (posInAlphabet == -1) {
-                        continue;
-                    }
-                    int index = (Alphabet.ALPHABET.indexOf(charLine[i]) + shift) % Alphabet.ALPHABET.length();
-                    charLine[i] = Alphabet.ALPHABET.charAt(index);
-                }
-                writer.write(charLine);
-                writer.newLine();
-            }
+            encode(reader, writer, shift);
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        }
+    }
+
+    private void encode(BufferedReader reader, BufferedWriter writer, int shift) throws IOException {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            char[] charLine = line.toCharArray();
+            for (int i = 0; i < charLine.length; i++) {
+                int posInAlphabet = Alphabet.ALPHABET.indexOf(charLine[i]);
+                if (posInAlphabet == -1) {
+                    continue;
+                }
+                int index = (Alphabet.ALPHABET.indexOf(charLine[i]) + shift) % Alphabet.ALPHABET.length();
+                charLine[i] = Alphabet.ALPHABET.charAt(index);
+            }
+            writer.write(charLine);
+            writer.newLine();
         }
     }
 }
