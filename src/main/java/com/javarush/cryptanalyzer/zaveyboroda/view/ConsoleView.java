@@ -25,7 +25,7 @@ public class ConsoleView implements View {
                 System.out.println(MenuConstants.SHIFT_INPUT_MESSAGE);
                 shift = getShift(scanner);
                 System.out.printf(MenuConstants.SHIFT_INPUT_SUCCESS_MESSAGE + "\n", shift);
-            } else {
+            } else if (mode == 1) {
                 System.out.printf(MenuConstants.SHIFT_RANDOM_SUCCESS_MESSAGE + "\n", shift);
             }
 
