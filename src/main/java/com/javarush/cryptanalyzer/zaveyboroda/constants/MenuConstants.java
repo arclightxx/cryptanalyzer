@@ -17,12 +17,4 @@ public class MenuConstants {
     private static final String THIRD_MODE_INFO = "3. Взлом - программа взламывает зашифрованный текст\n";
     private static final String MODE_INPUT_MESSAGE = "Пожалуйста, выберите желаемый режим, используя цифры 1, 2 и 3";
     public static final String MENU_MESSAGE = GREETINGS_MESSAGE + APP_INFO + FIRST_MODE_INFO + SECOND_MODE_INFO + THIRD_MODE_INFO + MODE_INPUT_MESSAGE;
-    public static final String MODE_INVALID_INPUT_MESSAGE = "Пожалуйста, используйте цифры 1, 2 и 3 для корректной работы программы";
-    public static final String MODE_SUCCESS_MESSAGE = "Вы выбрали режим: %s";
-    public static final String SHIFT_INPUT_MESSAGE = "Пожалуйста, напишите ключ для расшифровки (число должно быть положительным)";
-    public static final String SHIFT_INVALID_INPUT_MESSAGE = "Пожалуйста, введите положительное число";
-    public static final String SHIFT_INPUT_SUCCESS_MESSAGE = "Вы задали ключ: %d";
-    public static final String SHIFT_RANDOM_SUCCESS_MESSAGE = "Случайно сгенерированный ключ: %d";
-    public static final String INPUT_FILE_MESSAGE = "Пожалуйста, напишите путь к файлу, который Вы хотите %s или нажмите ENTER, чтобы выбрать файл по умолчанию";
-    public static final String INPUT_FILE_SUCCESS_MESSAGE = "Вы указали путь к файлу %s";
 }
