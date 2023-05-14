@@ -25,7 +25,7 @@ public class BruteForce implements Function {
             writer.write(resultDecryptedText.toString());
             System.out.println("Взломанный текст находится в файле output.txt\nКлюч шифрования: " + resultShift);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 
