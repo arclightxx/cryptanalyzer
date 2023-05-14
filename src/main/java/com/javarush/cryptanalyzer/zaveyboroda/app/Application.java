@@ -2,10 +2,7 @@ package com.javarush.cryptanalyzer.zaveyboroda.app;
 
 import com.javarush.cryptanalyzer.zaveyboroda.entities.UserInput;
 import com.javarush.cryptanalyzer.zaveyboroda.controllers.MainController;
-import com.javarush.cryptanalyzer.zaveyboroda.services.BruteForce;
-import com.javarush.cryptanalyzer.zaveyboroda.services.Decode;
-import com.javarush.cryptanalyzer.zaveyboroda.services.Encode;
-import com.javarush.cryptanalyzer.zaveyboroda.services.Function;
+import com.javarush.cryptanalyzer.zaveyboroda.services.*;
 import com.javarush.cryptanalyzer.zaveyboroda.view.View;
 
 public class Application {
@@ -18,6 +15,7 @@ public class Application {
     public void run() {
         View view = mainController.getView();
         view.displayMenu();
+
         UserInput userInput = view.getUserInput();
         int mode = userInput.getMode();
         Function function = getFunction(mode);
@@ -29,7 +27,7 @@ public class Application {
             case 1 -> new Encode();
             case 2 -> new Decode();
             case 3 -> new BruteForce();
-            default -> throw new RuntimeException("Режим не поддерживается");
+            default -> throw new IllegalStateException("Unexpected value: " + mode);
         };
     }
 }
