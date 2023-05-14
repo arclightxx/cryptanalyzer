@@ -17,7 +17,7 @@ public class BruteForce implements Function {
     public void execute(UserInput userInput) {
         Path inputFile = userInput.getFileInput();
         Decode decode = new Decode();
-        Pattern wordPattern = Pattern.compile("[а-яА-Я]+[\\.,!?:\\\"'\\-]*\\s");
+        Pattern wordPattern = Pattern.compile("[а-яА-Я]+[.,!?:\"'\\-]*\\s");
 
         findResultDecryptedText(inputFile, decode, wordPattern);
 
@@ -25,7 +25,7 @@ public class BruteForce implements Function {
             writer.write(resultDecryptedText.toString());
             System.out.println("Взломанный текст находится в файле output.txt\nКлюч шифрования: " + resultShift);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
     }
 

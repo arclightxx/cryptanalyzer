@@ -17,17 +17,17 @@ public class Decode implements Function {
             writer.write(decryptedText.toString());
             System.out.println("Расшифрованный текст находится в файле output.txt");
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 
     public StringBuilder execute(Path inputFile, int shift) {
         shift = -shift;
-        StringBuilder decryptedText = new StringBuilder();
+        StringBuilder decryptedText;
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile.toFile()))) {
             decryptedText = decode(reader, shift);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
         return decryptedText;
     }

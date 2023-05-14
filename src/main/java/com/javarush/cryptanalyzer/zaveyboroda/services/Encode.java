@@ -16,7 +16,7 @@ public class Encode implements Function {
             encode(reader, writer, shift);
             System.out.println("Зашифрованный текст находится в файле output.txt\nКлюч для расшифровки: " + shift);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
     }
 
