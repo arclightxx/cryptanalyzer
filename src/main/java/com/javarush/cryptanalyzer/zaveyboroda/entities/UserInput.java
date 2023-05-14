@@ -5,9 +5,9 @@ import com.javarush.cryptanalyzer.zaveyboroda.constants.Alphabet;
 import java.nio.file.Path;
 
 public class UserInput {
-    private int mode;
-    private Path fileInput;
-    private int shift;
+    private final int mode;
+    private final Path fileInput;
+    private final int shift;
 
     public UserInput(int mode, int shift, Path fileInput) {
         this.mode = mode;
