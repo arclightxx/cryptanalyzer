@@ -15,43 +15,43 @@ public class ConsoleView implements View {
     }
     @Override
     public UserInput getUserInput() {
-        try (Scanner scanner = new Scanner(System.in)) {
-            int mode = getMode(scanner);
-            System.out.printf(ModeConstants.MODE_SUCCESS_MESSAGE + "\n", MenuConstants.MODES.get(mode));
+        Scanner scanner = new Scanner(System.in);
+        int mode = getMode(scanner);
+        System.out.printf(ModeConstants.MODE_SUCCESS_MESSAGE + "\n", MenuConstants.MODES.get(mode));
 
-            int shift = 0;
-            if (mode == 2) {
-                System.out.println(ShiftConstants.SHIFT_INPUT_MESSAGE);
-                scanner.nextLine();
-                shift = getShift(scanner);
-                System.out.printf(ShiftConstants.SHIFT_INPUT_SUCCESS_MESSAGE + "\n", shift);
-            } else if (mode == 1) {
-                shift = new Random().nextInt(Alphabet.length) + 1;
-                System.out.printf(ShiftConstants.SHIFT_RANDOM_SUCCESS_MESSAGE + "\n", shift);
-            }
-
-            getInputFileMessage(mode);
+        int shift = 0;
+        if (mode == 2) {
+            System.out.println(ShiftConstants.SHIFT_INPUT_MESSAGE);
             scanner.nextLine();
-            Path inputFile = getInputFile(scanner, mode);
-            System.out.printf(InputFileConstants.FILE_SUCCESS_MESSAGE + "\n", inputFile);
-
-            System.out.println(InputFileConstants.OUTPUT_FILE_MESSAGE);
-            Path outputFile = getOutputFile(scanner);
-            System.out.printf(InputFileConstants.FILE_SUCCESS_MESSAGE + "\n", outputFile);
-
-            UserInput userInput = new UserInput(mode, shift, inputFile, outputFile);
-
-            if (mode == 4) {
-                System.out.println(InputFileConstants.DICTIONARY_FILE_MESSAGE);
-                Path dictionaryFile = getDictionaryFile(scanner);
-                System.out.printf(InputFileConstants.FILE_SUCCESS_MESSAGE + "\n", dictionaryFile);
-                userInput.setDictionaryFile(dictionaryFile);
-            }
-
-            System.out.println("*".repeat(50));
-
-            return userInput;
+            shift = getShift(scanner);
+            System.out.printf(ShiftConstants.SHIFT_INPUT_SUCCESS_MESSAGE + "\n", shift);
+        } else if (mode == 1) {
+            shift = new Random().nextInt(Alphabet.length) + 1;
+            System.out.printf(ShiftConstants.SHIFT_RANDOM_SUCCESS_MESSAGE + "\n", shift);
         }
+
+        getInputFileMessage(mode);
+        scanner.nextLine();
+        Path inputFile = getInputFile(scanner, mode);
+        System.out.printf(InputFileConstants.FILE_SUCCESS_MESSAGE + "\n", inputFile);
+
+        System.out.println(InputFileConstants.OUTPUT_FILE_MESSAGE);
+        Path outputFile = getOutputFile(scanner);
+        System.out.printf(InputFileConstants.FILE_SUCCESS_MESSAGE + "\n", outputFile);
+
+        UserInput userInput = new UserInput(mode, shift, inputFile, outputFile);
+
+        if (mode == 4) {
+            System.out.println("Режим находится в разработке..");
+//                System.out.println(InputFileConstants.DICTIONARY_FILE_MESSAGE);
+//                Path dictionaryFile = getDictionaryFile(scanner);
+//                System.out.printf(InputFileConstants.FILE_SUCCESS_MESSAGE + "\n", dictionaryFile);
+//                userInput.setDictionaryFile(dictionaryFile);
+        }
+
+        System.out.println("*".repeat(50));
+
+        return userInput;
     }
 
     private int getMode(Scanner scanner) {
