@@ -16,14 +16,15 @@ public class BruteForce implements Function {
     @Override
     public void execute(UserInput userInput) {
         Path inputFile = userInput.getFileInput();
+        Path outputFile = userInput.getFileOutput();
         Decode decode = new Decode();
         Pattern wordPattern = Pattern.compile("[а-яА-Я]+[.,!?:\"'\\-]*\\s");
 
         findResultDecryptedText(inputFile, decode, wordPattern);
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile.toFile()))) {
             writer.write(resultDecryptedText.toString());
-            System.out.println("Взломанный текст находится в файле output.txt\nКлюч шифрования: " + resultShift);
+            System.out.printf("Взломанный текст находится в файле %s\nКлюч шифрования: %d", outputFile, resultShift);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }

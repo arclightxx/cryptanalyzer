@@ -11,11 +11,12 @@ public class Decode implements Function {
     public void execute(UserInput userInput) {
         int shift = -userInput.getShift();
         Path inputFile = userInput.getFileInput();
+        Path outputFile = userInput.getFileOutput();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile.toFile()));
-             BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
+             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile.toFile()))) {
             StringBuilder decryptedText = decode(reader, shift);
             writer.write(decryptedText.toString());
-            System.out.println("Расшифрованный текст находится в файле output.txt");
+            System.out.printf("Расшифрованный текст находится в файле %s", outputFile);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }

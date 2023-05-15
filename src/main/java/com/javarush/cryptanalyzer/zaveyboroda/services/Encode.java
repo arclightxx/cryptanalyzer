@@ -11,10 +11,11 @@ public class Encode implements Function {
     public void execute(UserInput userInput) {
         int shift = userInput.getShift();
         Path inputFile = userInput.getFileInput();
+        Path outputFile = userInput.getFileOutput();
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile.toFile()));
-             BufferedWriter writer = new BufferedWriter(new FileWriter("output.txt"))) {
+             BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile.toFile()))) {
             encode(reader, writer, shift);
-            System.out.println("Зашифрованный текст находится в файле output.txt\nКлюч для расшифровки: " + shift);
+            System.out.printf("Зашифрованный текст находится в файле %s\nКлюч для расшифровки: %d", outputFile, shift);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
