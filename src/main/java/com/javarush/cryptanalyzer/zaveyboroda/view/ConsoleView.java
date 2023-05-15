@@ -17,27 +17,14 @@ public class ConsoleView implements View {
     public UserInput getUserInput() {
         Scanner scanner = new Scanner(System.in);
         int mode = getMode(scanner);
-        System.out.printf(ModeConstants.MODE_SUCCESS_MESSAGE + "\n", MenuConstants.MODES.get(mode));
 
-        int shift = 0;
-        if (mode == 2) {
-            System.out.println(ShiftConstants.SHIFT_INPUT_MESSAGE);
-            scanner.nextLine();
-            shift = getShift(scanner);
-            System.out.printf(ShiftConstants.SHIFT_INPUT_SUCCESS_MESSAGE + "\n", shift);
-        } else if (mode == 1) {
-            shift = new Random().nextInt(Alphabet.length) + 1;
-            System.out.printf(ShiftConstants.SHIFT_RANDOM_SUCCESS_MESSAGE + "\n", shift);
-        }
+        int shift = getShift(scanner, mode);
 
         getInputFileMessage(mode);
-        scanner.nextLine();
         Path inputFile = getInputFile(scanner, mode);
-        System.out.printf(InputFileConstants.FILE_SUCCESS_MESSAGE + "\n", inputFile);
 
-        System.out.println(InputFileConstants.OUTPUT_FILE_MESSAGE);
+        getOutputFileMessage();
         Path outputFile = getOutputFile(scanner);
-        System.out.printf(InputFileConstants.FILE_SUCCESS_MESSAGE + "\n", outputFile);
 
         UserInput userInput = new UserInput(mode, shift, inputFile, outputFile);
 
@@ -69,10 +56,30 @@ public class ConsoleView implements View {
             }
             scanner.nextLine();
         }
+        System.out.printf(ModeConstants.MODE_SUCCESS_MESSAGE + "\n", MenuConstants.MODES.get(mode));
         return mode;
     }
 
-    private int getShift(Scanner scanner) {
+    private int getShift(Scanner scanner, int mode) {
+        int shift;
+        switch (mode) {
+            case 2 -> {
+                System.out.println(ShiftConstants.SHIFT_INPUT_MESSAGE);
+                scanner.nextLine();
+                shift = getShiftFromScanner(scanner);
+                System.out.printf(ShiftConstants.SHIFT_INPUT_SUCCESS_MESSAGE + "\n", shift);
+            }
+            case 1 -> {
+                shift = new Random().nextInt(Alphabet.length) + 1;
+                System.out.printf(ShiftConstants.SHIFT_RANDOM_SUCCESS_MESSAGE + "\n", shift);
+            }
+            default -> shift = 0;
+        }
+
+        return shift;
+    }
+
+    private int getShiftFromScanner(Scanner scanner) {
         int shift;
         while (true) {
             if (scanner.hasNextInt()) {
@@ -87,6 +94,7 @@ public class ConsoleView implements View {
             }
             scanner.nextLine();
         }
+
         return shift;
     }
 
@@ -103,6 +111,8 @@ public class ConsoleView implements View {
         Path inputFile;
         String input;
 
+        scanner.nextLine();
+
         input = scanner.nextLine();
         if (input.isEmpty()) {
             input = switch (mode) {
@@ -113,8 +123,13 @@ public class ConsoleView implements View {
             };
         }
         inputFile = Path.of(input);
+        System.out.printf(InputFileConstants.FILE_SUCCESS_MESSAGE + "\n", inputFile);
 
         return inputFile;
+    }
+
+    private void getOutputFileMessage() {
+        System.out.println(InputFileConstants.OUTPUT_FILE_MESSAGE);
     }
 
     private Path getOutputFile(Scanner scanner) {
@@ -126,6 +141,7 @@ public class ConsoleView implements View {
             input = "output.txt";
         }
         outputFile = Path.of(input);
+        System.out.printf(InputFileConstants.FILE_SUCCESS_MESSAGE + "\n", outputFile);
 
         return outputFile;
     }
