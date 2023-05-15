@@ -16,7 +16,7 @@ public class Decode implements Function {
              BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile.toFile()))) {
             StringBuilder decryptedText = decode(reader, shift);
             writer.write(decryptedText.toString());
-            System.out.printf("Расшифрованный текст находится в файле %s", outputFile);
+            System.out.printf("Расшифрованный текст находится в файле %s\n", outputFile);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }

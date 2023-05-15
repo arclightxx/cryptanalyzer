@@ -15,7 +15,7 @@ public class Encode implements Function {
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile.toFile()));
              BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile.toFile()))) {
             encode(reader, writer, shift);
-            System.out.printf("Зашифрованный текст находится в файле %s\nКлюч для расшифровки: %d", outputFile, shift);
+            System.out.printf("Зашифрованный текст находится в файле %s\nКлюч для расшифровки: %d\n", outputFile, shift);
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
