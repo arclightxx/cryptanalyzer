@@ -27,6 +27,7 @@ public class Application {
             case 1 -> new Encode();
             case 2 -> new Decode();
             case 3 -> new BruteForce();
+            case 4 -> new StatisticalAnalysis();
             default -> throw new IllegalStateException("Unexpected value: " + mode);
         };
     }
