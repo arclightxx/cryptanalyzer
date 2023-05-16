@@ -18,13 +18,13 @@ public class ConsoleView implements View {
         Scanner scanner = new Scanner(System.in);
         int mode = getMode(scanner);
 
-        int shift = getShift(scanner, mode);
+        int shift = mode == 1 || mode == 2 ? getShift(scanner, mode) : 0;
 
         getInputFileMessage(mode);
         Path inputFile = getInputFile(scanner, mode);
 
         getOutputFileMessage();
-        Path outputFile = getOutputFile(scanner);
+        Path outputFile = getOutputFile(scanner, mode);
 
         UserInput userInput = new UserInput(mode, shift, inputFile, outputFile);
 
@@ -43,56 +43,53 @@ public class ConsoleView implements View {
 
     private int getMode(Scanner scanner) {
         int mode;
+
         while (true) {
-            if (scanner.hasNextInt()) {
-                mode = scanner.nextInt();
+            String input = scanner.nextLine();
+            if (input.matches("\\d+")) {
+                mode = Integer.parseInt(input);
                 if (mode < 1 || mode > 4) {
                     System.out.println(ModeConstants.MODE_INVALID_INPUT_MESSAGE);
                 } else {
                     break;
                 }
             } else {
+                if (input.isEmpty()) {
+                    continue;
+                }
                 System.out.println(ModeConstants.MODE_INVALID_INPUT_MESSAGE);
             }
-            scanner.nextLine();
         }
         System.out.printf(ModeConstants.MODE_SUCCESS_MESSAGE + "\n", MenuConstants.MODES.get(mode));
+
         return mode;
     }
 
     private int getShift(Scanner scanner, int mode) {
         int shift;
         switch (mode) {
-            case 2 -> {
-                System.out.println(ShiftConstants.SHIFT_INPUT_MESSAGE);
-                scanner.nextLine();
-                shift = getShiftFromScanner(scanner);
-                System.out.printf(ShiftConstants.SHIFT_INPUT_SUCCESS_MESSAGE + "\n", shift);
-            }
-            case 1 -> {
-                shift = new Random().nextInt(Alphabet.length) + 1;
-                System.out.printf(ShiftConstants.SHIFT_RANDOM_SUCCESS_MESSAGE + "\n", shift);
-            }
-            default -> shift = 0;
+            case 1 -> System.out.println(ShiftConstants.SHIFT_INPUT_FIRST_MODE_MESSAGE);
+            case 2 -> System.out.println(ShiftConstants.SHIFT_INPUT_MESSAGE);
         }
 
-        return shift;
-    }
-
-    private int getShiftFromScanner(Scanner scanner) {
-        int shift;
         while (true) {
-            if (scanner.hasNextInt()) {
-                shift = scanner.nextInt();
+            String input = scanner.nextLine();
+            if (input.matches("\\d+")) {
+                shift = Integer.parseInt(input);
                 if (shift < 1) {
                     System.out.println(ShiftConstants.SHIFT_INVALID_INPUT_MESSAGE);
                 } else {
+                    System.out.printf(ShiftConstants.SHIFT_INPUT_SUCCESS_MESSAGE + "\n", shift);
                     break;
                 }
             } else {
+                if (input.isEmpty()) {
+                    shift = new Random().nextInt(Alphabet.length) + 1;
+                    System.out.printf(ShiftConstants.SHIFT_RANDOM_SUCCESS_MESSAGE + "\n", shift);
+                    break;
+                }
                 System.out.println(ShiftConstants.SHIFT_INVALID_INPUT_MESSAGE);
             }
-            scanner.nextLine();
         }
 
         return shift;
@@ -110,8 +107,6 @@ public class ConsoleView implements View {
     private Path getInputFile(Scanner scanner, int mode) {
         Path inputFile;
         String input;
-
-        scanner.nextLine();
 
         input = scanner.nextLine();
         if (input.isEmpty()) {
@@ -132,13 +127,17 @@ public class ConsoleView implements View {
         System.out.println(InputFileConstants.OUTPUT_FILE_MESSAGE);
     }
 
-    private Path getOutputFile(Scanner scanner) {
+    private Path getOutputFile(Scanner scanner, int mode) {
         Path outputFile;
         String input;
 
         input = scanner.nextLine();
         if (input.isEmpty()) {
-            input = "output.txt";
+            switch (mode) {
+                case 1 -> input = "encoded.txt";
+                case 2, 3, 4 -> input = "output.txt";
+                default -> throw new RuntimeException("Ошибка при выборе файла по умолчанию");
+            }
         }
         outputFile = Path.of(input);
         System.out.printf(InputFileConstants.FILE_SUCCESS_MESSAGE + "\n", outputFile);

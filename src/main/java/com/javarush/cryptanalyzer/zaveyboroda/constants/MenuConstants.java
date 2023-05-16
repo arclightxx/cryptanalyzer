@@ -13,7 +13,7 @@ public class MenuConstants {
     }
     private static final String GREETINGS_MESSAGE = "Вас приветстует приложение по работе с шифром Цезаря!\n";
     private static final String APP_INFO = "Приложение поддерживает 4 режима:\n";
-    private static final String FIRST_MODE_INFO = "1. Шифрование - программа зашифровывает текст, используя случайно сгенерированный ключ\n";
+    private static final String FIRST_MODE_INFO = "1. Шифрование - программа зашифровывает текст, используя случайный или заданный Вами ключ\n";
     private static final String SECOND_MODE_INFO = "2. Расшифровка - программа расшифровывает текст, используя заданный ключ\n";
     private static final String THIRD_MODE_INFO = "3. Взлом - программа взламывает зашифрованный текст\n";
     private static final String FOURTH_MODE_INFO = "4. Метод статистического анализа - программа расшифровывает текст, подбирая ключ на основе незашифрованного текста в той же стилистике ";
