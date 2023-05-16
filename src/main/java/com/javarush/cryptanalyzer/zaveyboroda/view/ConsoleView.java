@@ -1,6 +1,7 @@
 package com.javarush.cryptanalyzer.zaveyboroda.view;
 
 import com.javarush.cryptanalyzer.zaveyboroda.constants.*;
+import com.javarush.cryptanalyzer.zaveyboroda.entities.Input;
 import com.javarush.cryptanalyzer.zaveyboroda.entities.UserInput;
 
 import java.nio.file.Path;
@@ -16,9 +17,11 @@ public class ConsoleView implements View {
     @Override
     public UserInput getUserInput() {
         Scanner scanner = new Scanner(System.in);
-        int mode = getMode(scanner);
+        Input input = Input.getInput();
 
-        int shift = mode == 1 || mode == 2 ? getShift(scanner, mode) : 0;
+        int mode = getModeValue(scanner, input);
+
+        int shift = mode == 1 || mode == 2 ? getShiftValue(scanner, input, mode) : 0;
 
         getInputFileMessage(mode);
         Path inputFile = getInputFile(scanner, mode);
@@ -41,58 +44,62 @@ public class ConsoleView implements View {
         return userInput;
     }
 
-    private int getMode(Scanner scanner) {
+    private int getModeValue(Scanner scanner, Input input) {
         int mode;
+        String invalidInputMessage = ModeConstants.MODE_INVALID_INPUT_MESSAGE;
+        String successMessage = ModeConstants.MODE_SUCCESS_MESSAGE;
 
         while (true) {
-            String input = scanner.nextLine();
-            if (input.matches("\\d+")) {
-                mode = Integer.parseInt(input);
-                if (mode < 1 || mode > 4) {
-                    System.out.println(ModeConstants.MODE_INVALID_INPUT_MESSAGE);
-                } else {
-                    break;
-                }
+            input.setValue(scanner.nextLine());
+            if (input.isDigit() && input.isInModeRange()) {
+                mode = Integer.parseInt(input.getValue());
+                break;
             } else {
-                if (input.isEmpty()) {
+                if (input.getValue().isEmpty()) {
                     continue;
                 }
-                System.out.println(ModeConstants.MODE_INVALID_INPUT_MESSAGE);
+                System.out.println(invalidInputMessage);
             }
         }
-        System.out.printf(ModeConstants.MODE_SUCCESS_MESSAGE + "\n", MenuConstants.MODES.get(mode));
+
+        System.out.printf(successMessage + "\n", MenuConstants.MODES.get(mode));
 
         return mode;
     }
 
-    private int getShift(Scanner scanner, int mode) {
+    private int getShiftValue(Scanner scanner, Input input, int mode) {
         int shift;
+        String invalidInputMessage = ShiftConstants.SHIFT_INVALID_INPUT_MESSAGE;
+        String successInputMessage = ShiftConstants.SHIFT_INPUT_SUCCESS_MESSAGE;
+        String successRandomMessage = ShiftConstants.SHIFT_RANDOM_SUCCESS_MESSAGE;
+
+        printShiftInputMessage(mode);
+
+        while (true) {
+            input.setValue(scanner.nextLine());
+            if (input.isDigit() && input.isInShiftRange()) {
+                shift = Integer.parseInt(input.getValue());
+                break;
+            } else {
+                if (input.getValue().isEmpty()) {
+                    shift = new Random().nextInt(Alphabet.length) + 1;
+                    System.out.printf(successRandomMessage + "\n", shift);
+                    break;
+                }
+                System.out.println(invalidInputMessage);
+            }
+        }
+
+        System.out.printf(successInputMessage + "\n", shift);
+
+        return shift;
+    }
+
+    private void printShiftInputMessage(int mode) {
         switch (mode) {
             case 1 -> System.out.println(ShiftConstants.SHIFT_INPUT_FIRST_MODE_MESSAGE);
             case 2 -> System.out.println(ShiftConstants.SHIFT_INPUT_MESSAGE);
         }
-
-        while (true) {
-            String input = scanner.nextLine();
-            if (input.matches("\\d+")) {
-                shift = Integer.parseInt(input);
-                if (shift < 1) {
-                    System.out.println(ShiftConstants.SHIFT_INVALID_INPUT_MESSAGE);
-                } else {
-                    System.out.printf(ShiftConstants.SHIFT_INPUT_SUCCESS_MESSAGE + "\n", shift);
-                    break;
-                }
-            } else {
-                if (input.isEmpty()) {
-                    shift = new Random().nextInt(Alphabet.length) + 1;
-                    System.out.printf(ShiftConstants.SHIFT_RANDOM_SUCCESS_MESSAGE + "\n", shift);
-                    break;
-                }
-                System.out.println(ShiftConstants.SHIFT_INVALID_INPUT_MESSAGE);
-            }
-        }
-
-        return shift;
     }
 
     private void getInputFileMessage(int mode) {
